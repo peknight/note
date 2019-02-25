@@ -1,0 +1,116 @@
+键位说明
+----------
+
+<DEL> 退格
+<Return> 回车
+<SPC> 空格
+<TAB> Table键
+
+
+常用命令
+----------
+
+C-x C-c 退出
+C-g 清除当前命令
+<ESC><ESC><ESC> 退出Recursive-editing-levels(与C-g类似)
+C-z 将emacs切换至后台(使用fg命令或%emacs命令恢复)
+
+
+组合命令
+----------
+
+C-u 接数字n 接命令 命令重复n次
+C-x 接单字符扩展
+M-x 接长名扩展
+
+
+移动命令
+----------
+
+C-v 向下滚一屏(C-u 时滚指定行)
+M-v 向上滚一屏(C-u 时滚指定行)
+C-l 当前光标行居中 -> 最上方 -> 最下方(C-u 时固定至指定行)
+C-p 向上一行
+C-n 向下一行
+C-b 向左一个字符
+C-f 向右一个字符
+M-b 向左一个单词
+M-f 向右一个单词
+C-a 行首
+C-e 行尾
+M-a 句首->前一句句首
+M-e 句尾->前一句句尾
+M-< 第一行
+M-> 最后一行
+C-s string 向后查找
+C-r string 向前查找
+
+
+编辑命令
+----------
+
+C-d 删除右字符
+M-d 删除右单词
+<DEL> 删除左字符
+M-<DEL> 删除左单词
+C-k 删除至行尾 按两次会删除行尾换行符
+M-k 删除至句尾
+
+C-<SPC> 或 C-@ 设置标记(C-<SPC>部分操作系统用于切换输入法导致失效)
+C-w 从标记一直删除到光标
+
+C-y 把被kill的文本粘贴到当前光标
+M-y 粘贴前一次的内容到当前光标 -> 将粘贴内容向前追溯
+
+C-/ 或 C-_ 或 C-x u 撤销
+
+M-x replace-string<Return>origin<Return>replace<Return> 替换
+
+
+窗口命令
+----------
+
+C-x 1 当前窗口最大化
+C-x 2 分成水平两个窗口
+C-x 3 分成垂直两个窗口
+C-x 4 C-f 在新窗口打开另一个文件并移动光标过去
+C-M-v 滚动另一个窗口内容
+C-x o 切换到另一个窗口
+M-x make-frame GUI开新窗口
+M-x make-frame GUI关掉新窗口
+
+
+文件命令
+----------
+
+C-x C-f filename 打开文件
+C-x C-s 保存
+C-x C-b 打开缓冲区列表
+C-x b buffername 切换缓冲区
+C-x s 保存其他缓冲区
+M-x recover-file 恢复至自动保存内容
+
+
+模式命令
+----------
+
+M-x fundamental-mode 切换至基础模式
+M-x text-mode 切换至文本模式
+M-x auto-fill-mode auto-fill模式切换（可以自动换行）
+C-x f number 或 C-u number C-x f 设置一行字符数(在auto-fill模式下一行到达指定字符数会自动换行)
+M-q 重新调整段落格式(auto-fill模式下re-fill)
+
+
+帮助命令
+----------
+
+C-h 或 F1 或 M-x help 帮助
+C-h ? 查帮助
+C-h a 查询某个关键字相关的所有命令
+C-h c 查命令的简要说明
+C-h f 根据功能查命令
+C-h i 或 C-h r 查询手册
+C-h k 查命令的详细说明
+C-h m 查看不同模式的帮助文档
+C-h v 查询变量说明
+
