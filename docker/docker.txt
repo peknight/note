@@ -1,0 +1,70 @@
+# 默认配置文件 - Ubuntu
+/etc/default/docker
+# 默认配置文件 - CentOS
+/etc/systemd/system/docker.service.d/docker.conf
+# 添加下一行代码让Docker服务可以通过本地2375端口接受来自外部的请求
+DOCKER_OPTS="$DOCKER_OPTS -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+# Docker服务的管理脚本
+/etc/init.d/docker
+# 管理服务配置文件
+/etc/init/docker.conf
+# 启动docker
+systemctl start docker.service
+# 过滤列出的镜像，如只显示没有被使用的镜像
+docker images -a -f dangling=true
+# 添加镜像标签
+docker tag ubuntu:latest myubuntu:latest
+# 搜寻镜像
+docker search
+  --automated=true|false: 仅显示自动创建的镜像，默认为否；
+  --no-trunc=true|false: 输出信息不截断显示，默认为否；
+  -s, --starts=X: 指定仅显示评价为指定星级以上的镜像
+# 存储和载入镜像
+docker save -o ubuntu_14.04.tar ubuntu:14.04
+docker load --input ubuntu_14.04.tar
+docker load < ubuntu_14.04.tar
+# 上传镜像
+docker push NAME[:TAG] | [REGISTRY_HOST[:REGISTRY_PORT]/]NAME[:TAG]
+# 导出容器
+docker export -o test_for_run.tar ce5
+# 导入容器
+docker import test_for_run.tar - test/ubuntu:v1.0
+# 登录
+docker login
+
+# 搭建本地私有仓库
+docker run -d -p 5000:5000 -v /opt/data/registry:/tmp/registry registry
+docker tag ubuntu:14.04 127.0.0.1:5000/test
+docker push 127.0.0.1:5000/test
+# 查看镜像
+curl http://127.0.0.1:5000/v1/search
+
+# Dockerfile ARG
+ARG <name>[=<default value>]
+docker build --build-arg <name>=<value> .
+
+# Alpine安装软件包
+apk add --no-cache <package>
+# Alpine软件包名字与其他发行版可能有所不同，可在下列网址搜索查看
+https://pkgs.alpinelinux.org/packages
+# 如果需要的安装包不在主索引内，但是在测试或社区索引中，那么可以按照以下方法使用这些安装包
+echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+apk --update add --no-cache <package>
+
+# Ubuntu安装软件包
+Docker镜像在制作时为了精简清楚了apt仓库信息，需要先执行apt-get update来更新仓库信息
+
+# Docker服务端默认监听本地的unix:///var/run/docker.sock套接字，只允许本地的root用户或docker用户组成员访问
+# 可以通过-H选项来修改监听方式
+docker daemon -H 0.0.0.0:1234
+# 客户端指定ip端口
+docker -H tcp://127.0.0.1:1234 version
+
+# Docker控制组CGroups
+cd /sys/fs/croup/memory/docker
+
+# 安装Docker Registry
+# 启用证书 REGISTRY_HTTP_TLS_CERTIFICATE 和 REGISTRY_HTTP_TLS_KEY
+docker run -d -p 5000:5000 --restart=always --name registry -v /home/user/registry-conf/config.yml:/etc/docker/registry/config.yml -v /opt/data/registry:/var/lib/registry -v `pwd`/certs:/certs -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/myrepo.crt -e REGISTRY_HTTP_TLS_KEY=/certs/myrepo.key registry:2.7.1
+
+
